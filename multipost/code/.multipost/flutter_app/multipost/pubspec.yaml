@@ -1,0 +1,66 @@
+name: multipost
+description: "A Flutter application for MultiPost social media management."
+publish_to: 'none'
+version: 1.0.1+2
+
+environment:
+  sdk: ^3.7.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  http: ^1.2.2
+  get_it: ^8.0.3
+  flutter_bloc: ^9.1.0
+  equatable: ^2.0.5
+  image_picker: ^1.1.2
+  flutter_svg: ^2.0.7
+  shared_preferences: ^2.3.0
+  intl: ^0.20.2
+  webview_flutter: ^4.0.0
+  url_launcher: ^6.3.0  # Добавляем url_launcher
+  flutter_inappwebview: ^6.1.5
+  crypto: ^3.0.6
+  flutter_secure_storage: ^9.2.4
+  uuid: ^4.5.1
+  
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/welcome_illustration.png
+    - assets/images/Marlo21.png
+    - assets/images/judy_mascot.png
+    - assets/icons/vk_icon.svg
+    - assets/icons/telegram_icon.svg
+    - assets/icons/reddit_icon.svg
+    - assets/icons/send_icon.svg
+    - assets/icons/dialog_icon.svg
+    - assets/icons/ok_icon.svg
+    - assets/icons/error_icon.svg
+    - assets/icons/success_icon.svg
+    - assets/icons/sms_icon.svg
+    - assets/icons/vector_template.svg
+    - assets/icons/vector_post.svg
+    - assets/icons/home_icon.svg
+    - assets/icons/refresh_icon.svg
+    - assets/icons/profile_icon.svg
+    - assets/icons/photo_icon.svg
+    - assets/icons/calendar_icon.svg
+    - assets/icons/check_circle_icon.svg
+    - assets/icons/next_icon.svg
+    - assets/icons/delete_icon.svg
+    - assets/icons/logout_icon.svg
+    - assets/icons/connected_icon.svg
+    - assets/icons/disconnected_icon.svg
+  fonts:
+    - family: Montserrat
+      fonts:
+        - asset: assets/fonts/Montserrat-Regular.ttf
+        - asset: assets/fonts/Montserrat-Medium.ttf
+        - asset: assets/fonts/Montserrat-Bold.ttf

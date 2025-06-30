@@ -1,0 +1,136 @@
+#services:
+#  db:
+#    image: postgres:latest
+#    container_name: multipost-postgres
+#    environment:
+#      POSTGRES_USER: multipost
+#      POSTGRES_PASSWORD: multipipost123
+#      POSTGRES_DB: multipost
+#    ports:
+#      - "5432:5432"  # Для отладки, можно убрать в продакшене
+#    volumes:
+#      - postgres_data:/var/lib/postgresql/data
+#    networks:
+#      - multipost-network
+#    restart: unless-stopped
+#    healthcheck:
+#      test: ["CMD-SHELL", "pg_isready -U multipost"]
+#      interval: 5s
+#      timeout: 5s
+#      retries: 5
+#
+#  app:
+#    build:
+#      context: /root/multipost/.multipost
+#      dockerfile: go_app/multipost-go/Dockerfile
+#    container_name: multipost-app
+#    environment:
+#      - DATABASE_URL=postgres://multipost:multipost123@db:5432/multipost?sslmode=disable
+#      - JWT_SECRET=lx58dGzxcSqKJUdP2CtLWUDZZJkNzjMfRBstnTFKXZU=
+#      - REDDIT_CLIENT_ID=rbPEXEM2hTaCd8Ea6yqVMA
+#      - REDDIT_REDIRECT_URI=https://multipostingm.com/auth/reddit/callback
+#      - REDDIT_CLIENT_SECRET=_BCSC_QIbiaX6OfXQ0891ZSzTR2T4Q
+#      - VK_CLIENT_ID=53526931
+#      - VK_GROUP_ACCESS_TOKEN=1df238f61df238f61df238f64b1ec2f96511df21df238f675eabff314a9886b3887999d
+#      - VK_REDIRECT_URI=https://multipostingm.com/auth/vk/callback
+#      - PORT=8080
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      db:
+#        condition: service_healthy
+#    networks:
+#      - multipost-network
+#    restart: unless-stopped
+#
+#  fastapi:
+#    build:
+#      context: /root/multipost/.multipost/fast_api_app/TelegramAuthService
+#      dockerfile: Dockerfile
+#    container_name: multipost-fastapi
+#    environment:
+#      - GO_BACKEND_URL=http://app:8080
+#    ports:
+#      - "8001:8001"
+#    depends_on:
+#      - app
+#      - db
+#    networks:
+#      - multipost-network
+#    restart: unless-stopped
+#
+#volumes:
+#  postgres_data:
+#
+#networks:
+#  multipost-network:
+#    driver: bridge
+version: '3.8'
+
+services:
+  db:
+    image: postgres:latest
+    container_name: multipost-postgres
+    environment:
+      POSTGRES_USER: multipost
+      POSTGRES_PASSWORD: multipipost123
+      POSTGRES_DB: multipost
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - multipost-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U multipost"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build:
+      context: ./go_app/multipost-go
+      dockerfile: Dockerfile
+    container_name: multipost-app
+    environment:
+      - DATABASE_URL=postgres://multipost:multipipost123@db:5432/multipost?sslmode=disable
+      - JWT_SECRET=lx58dGzxcSqKJUdP2CtLWUDZZJkNzjMfRBstnTFKXZU=
+      - REDDIT_CLIENT_ID=rbPEXEM2hTaCd8Ea6yqVMA
+      - REDDIT_REDIRECT_URI=https://multipostingm.ru/auth/reddit/callback
+      - REDDIT_CLIENT_SECRET=_BCSC_QIbiaX6OfXQ0891ZSzTR2T4Q
+      - VK_CLIENT_ID=53526931
+      - VK_GROUP_ACCESS_TOKEN=1df238f61df238f61df238f64b1ec2f96511df21df238f675eabff314a9886b3887999d
+      - VK_REDIRECT_URI=https://multipostingm.ru/auth/vk/callback
+      - PORT=8080
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - multipost-network
+    restart: unless-stopped
+
+  fastapi:
+    build:
+      context: ./fast_api_app/TelegramAuthService
+      dockerfile: Dockerfile
+    container_name: multipost-fastapi
+    environment:
+      - GO_BACKEND_URL=http://app:8080
+    ports:
+      - "8001:8001"
+    depends_on:
+      - app
+      - db
+    networks:
+      - multipost-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+networks:
+  multipost-network:
+    driver: bridge
